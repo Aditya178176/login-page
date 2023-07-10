@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatbot</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #CCCCFF;
+    }
+
+    .container1 {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .chat-container {
+      height: 300px;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+    }
+
+    .user-message {
+      margin-bottom: 10px;
+    }
+
+    .bot-message {
+      margin-bottom: 10px;
+      text-align: right;
+    }
+
+    .input-container {
+      margin-top: 10px;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container1">
+      <h1 style="color: red;">Chatbot Login</h1>
+      <form id="login-form" onsubmit="login(event)">
+        <div class="form-group">
+          <label for="username" style="color: blue;">Username:</label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password" style="color: blue;">Password:</label>
+          <input type="password" id="password" required>
+        </div>
+        <div class="form-group">
+          <button type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+
+  <div class="container">
+    <h1 style="color: red;">Welcome to Chatbot</h1>
+    <div class="chat-container" id="chat-container"></div>
+    <div class="input-container">
+      <input type="text" id="user-input" placeholder="Enter your message..." autofocus>
+    </div>
+  </div>
+
+  <script>
+    // Get the chat container and user input field
+    var chatContainer = document.getElementById('chat-container');
+    var userInput = document.getElementById('user-input');
+
+    // Function to add a message to the chat container
+    function addMessage(message, isUser) {
+      var messageElement = document.createElement('div');
+      messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+      messageElement.textContent = message;
+      chatContainer.appendChild(messageElement);
+
+      // Scroll to the bottom of the chat container
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // Function to handle user input
+    function handleUserInput() {
+      var message = userInput.value;
+
+      // Add user message to the chat container
+      addMessage(message, true);
+
+      // Process user input and generate bot response
+      var botResponse = getBotResponse(message);
+
+      // Add bot response to the chat container after a short delay to simulate typing
+      setTimeout(function() {
+        addMessage(botResponse, false);
+      }, 500);
+
+      // Clear the user input field
+      userInput.value = '';
+    }
+
+    // Sample function to generate bot response based on user input
+    function getBotResponse(userInput) {
+      // You can replace or extend this function to implement actual chatbot functionality
+      // Here's a simple example that echoes the user's message
+      return "You said: " + userInput;
+    }
+
+    // Event listener for user input submission
+    userInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        handleUserInput();
+      }
+    });
+    userInput.focus();
+  </script>
+</body>
+</html>
